@@ -1,0 +1,168 @@
+openapi: 3.0.0
+info:
+  title: Online Learning Platform (Udemy)
+  version: 1.0.0
+  description: 
+
+paths:
+  /user/update:
+    put:
+      summary: Update User
+      tags:
+        - User
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: integer
+                  description: ID of the user
+                email:
+                  type: string
+                  format: email
+                password:
+                  type: string
+                first_name:
+                  type: string
+                last_name:
+                  type: string
+                phone_no:
+                  type: string
+                profilePicture:
+                  type: string
+                  format: binary
+                role_id:
+                  type: integer
+              required:
+                - id
+      responses:
+        "200":
+          description: User Updated Successfully
+        "404":
+          description: User Not Found
+        "500":
+          description: Internal Server Error
+
+  /user/delete/{id}:
+    put:
+      summary: Delete User by ID
+      tags:
+        - User
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: ID of the user to delete
+      responses:
+        "200":
+          description: User Deleted Successfully
+        "404":
+          description: User Not Found
+        "500":
+          description: Internal Server Error
+
+  /user/get/all/users:
+    get:
+      summary: Get All Users
+      tags:
+        - User
+      responses:
+        "200":
+          description: Get all users successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Users fetched successfully
+        "404":
+          description: No users found
+        "500":
+          description: Internal Server Error
+  /user/create:
+    post:
+      summary: Create User
+      tags:
+        - User
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                  description: User email address
+                password:
+                  type: string
+                  description: User password
+                first_name:
+                  type: string
+                  description: First name of the user
+                last_name:
+                  type: string
+                  description: Last name of the user
+                profilePicture:
+                  type: string
+                  format: binary
+                  description: Profile picture of the user
+                role_id:
+                  type: integer
+                  description: Role ID of the user
+              required:
+                - email
+                - password
+                - first_name
+                - last_name
+                - role_id
+      responses:
+        "201":
+          description: User Created Successfully!
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: User Created Successfully!
+        "400":
+          description: Bad Request
+        "500":
+          description: Internal Server Error
+  /user/get/{id}:
+    get:
+      summary: Get User by ID
+      tags:
+        - User
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: ID of the user
+      responses:
+        "200":
+          description: Get user successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: User fetched successfully
+        "404":
+          description: User not found
+        "500":
+          description: Internal Server Error
